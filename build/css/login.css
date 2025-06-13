@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Tilt Neon" !important;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("/images/light.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* contain all elements main div */
+
+.form-box {
+  width: 50vw;
+  max-width: 425px;
+  min-width: 100px;
+  backdrop-filter: blur(5px);
+  padding: 55px;
+  border-radius: 10px;
+  box-shadow: -2px 2px 15px rgba(0, 0, 0, 1);
+  margin-top: 80px;
+}
+
+/* contain both forms form one and two */
+
+.hr {
+  display: flex;
+  color: rgb(83, 81, 81);
+}
+
+.hr hr {
+  position: relative;
+  width: 50%;
+  background-color: rgb(83, 81, 81);
+  height: 1px;
+  border: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.hr h4 {
+  top: 0px;
+}
+
+.static {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: greenyellow;
+  transition: 2s;
+}
+
+/* arrow */
+
+.form-box h1 {
+  color: greenyellow;
+  margin: 0;
+  text-shadow: -4px 4px 15px rgba(0, 0, 0, 10);
+  text-align: center;
+}
+
+.underline {
+  width: 2rem;
+  height: 4px;
+  background-color: green;
+  margin: 0 auto 1rem auto;
+  border-radius: 5px;
+}
+
+.form-two {
+  margin-top: 3rem;
+}
+
+/* log in form */
+
+.input-field {
+  margin: 1rem 0;
+  background: #eaeaea;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-field input {
+  background: transparent;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 1.2rem 0.9rem;
+}
+
+.input-field i {
+  margin-left: 1rem;
+  color: rgba(153, 153, 153, 0.822);
+}
+
+i {
+  margin-left: 5px;
+}
+
+button {
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: 1px solid black;
+}
+
+#btn {
+  position: relative;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* contain button */
+
+#btn .right {
+  position: relative;
+  flex-basis: 45%;
+  left: 0px;
+  width: 7rem;
+  overflow: hidden;
+  cursor: pointer;
+  height: 35px;
+  background: transparent;
+  transition: 0.5s ease-in-out;
+}
+
+#btn .right:hover {
+  transform: scale(1.1);
+  box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.5);
+  border: none;
+  background-color: greenyellow;
+}
+
+.gobtn {
+  position: relative;
+  text-align: center;
+  flex-basis: 45%;
+  overflow: hidden;
+  cursor: pointer;
+  height: 2.2rem;
+  background: white;
+  text-decoration: none;
+  color: black;
+  border: 1px solid black;
+  border-radius: 50px;
+  margin-left: 5px;
+  padding-top: 0.4rem;
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  transition: 0.5s ease-in-out;
+}
+
+#btn .gobtn:hover {
+  transform: scale(1.1);
+  box-shadow: 2px 2px 15px 5px rgba(0, 0, 0, 0.5);
+  border: none;
+}
+
+.gobtn i {
+  color: #007bff;
+}
+
+.gobtn span {
+  z-index: 12;
+}
+
+button a {
+  text-decoration: none;
+  color: black;
+  position: relative;
+  z-index: 9;
+}
+
+.input-group {
+  height: 45vh;
+  margin-bottom: 3rem;
+}
+
+/* contain all input of single form */
+
+.hide {
+  display: none;
+}
+
+/* for hiding forms using js  */
+
+p {
+  display: flex;
+  justify-content: left;
+  margin: 0.4rem;
+}
+
+p a {
+  text-decoration: none;
+  color: #007bff;
+  display: flex;
+  justify-content: left;
+}
+
+p a:hover {
+  font-weight: 700;
+}
+
+/* animation start */
+.animate {
+  animation: rotateAnimation 0.5s 2 alternate;
+}
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    transform: rotateX(90deg);
+  }
+}
+
+/* animation end */
+
+/* responsiveness */
+@media only screen and (min-width: 100px) and (max-width: 850px) {
+  .form-box {
+    width: 90vw;
+    padding: 2.5rem 1rem;
+    height: 80vh;
+  }
+
+  #btn .right {
+    background-color: greenyellow;
+  }
+
+  button img {
+    position: relative;
+    left: 20px;
+  }
+
+  /* .input-field{
+        margin: 2rem 0px 0px 0px;
+    } */
+
+  /* .gobtn {
+    margin: 2rem 0px 2rem 0px;
+  } */
+
+  /* #btn{
+        padding: 1rem;
+        margin-top: 1rem;
+    } */
+
+  .form-box {
+    margin-top: 80px;
+    /* height: 40rem; */
+  }
+}
+
+@media only screen and (min-height: 100px) and (max-height: 500px) {
+  .form-box {
+    height: 98vh;
+    padding: 1rem 1rem;
+  }
+
+  .input-field {
+    margin: 0.5rem;
+  }
+
+  .input-field input {
+    padding: 0.51rem 0.45rem;
+  }
+
+  .input-group {
+    height: 20vh;
+  }
+
+  .form-two {
+    margin-top: 1.5rem;
+  }
+
+  #btn .right {
+    margin-top: none;
+  }
+}

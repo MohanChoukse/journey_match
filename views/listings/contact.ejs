@@ -1,0 +1,42 @@
+<% layout("layouts/boilerplate") %>
+
+    <body>
+        <h3 class="show-head col-md-6 offset-md-3 mt-3">Enter your question</h3>
+        <div class="line col-md-6 offset-md-3"></div>
+        <div class="contact-container">
+            <form action="/listings/<%= listing.id %>/contact" method="POST" class="needs-validation" novalidate>
+                <div class="contact-form col-md-6 offset-md-3 mt-3">
+
+                    <div class="mb-3 mail-div">
+                        <label for="staticEmail" class="col-3  col-form-label">Your Email : </label>
+                        <!-- <div class="col-sm-10"> -->
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                            value="<%= currUser.email %>">
+                        <!-- </div> -->
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" required
+                            placeholder="name@example.com">
+                        <label for="floatingInput">Your Name</label>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please enter your Name.
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                            style="height: 150px" name="message" required></textarea>
+                        <label for="floatingTextarea2">Your Question</label>
+                        <div class="invalid-feedback">
+                            Please write your queries.
+                        </div>
+                    </div>
+                    <a href="/listings/<%= listing.id %>" class="btn btn-outline-secondary edit-btn me-3"><i
+                            class="fa-solid fa-arrow-left"></i></a>
+                    <button class="btn btn-outline-info edit-btn ">Send</button>
+                </div>
+            </form>
+        </div>
+    </body>

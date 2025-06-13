@@ -1,0 +1,152 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <form action="/listings/search" method="get" id="searchForm" class="mt-4">
+            <input type="text" class="search-field p-2 ps-4" name="searchQuery" id="searchQuery"
+                placeholder="Search by title, location, or country">
+            <button type="submit" class="search-btn p-2 ms-1"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <div class="head-div mt-4 row" id="head">
+            <div class="categories-container col-md-8">
+                <button class="arrow-btn left-btn me-3"><i class="fa-solid fa-angle-left"></i></button>
+                <div class="categories pt-2">
+
+                    <div class="category ms-3 me-5">
+                        <i class="fa-solid fa-earth-americas fa-lg"></i>
+                        <a href="/listings" style="text-decoration: none;">
+                            <p class="mt-2">All</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-fire-flame-curved fa-lg"></i>
+                        <a href="#" style="text-decoration: none;">
+                            <p class="mt-2">Trending</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-bed fa-lg"></i>
+                        <a href="/listings/category/Room" style="text-decoration: none;">
+                            <p class="mt-2">Room</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-umbrella-beach fa-lg"></i>
+                        <a href="/listings/category/Beach" style="text-decoration: none;">
+                            <p class="mt-2">Beach</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-building fa-lg"></i>
+                        <a href="/listings/category/Building" style="text-decoration: none;">
+                            <p class="mt-2">Building</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-house fa-lg"></i>
+                        <a href="/listings/category/House" style="text-decoration: none;">
+                            <p class="mt-2">House</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-tractor fa-lg"></i>
+                        <a href="/listings/category/Farm" style="text-decoration: none;">
+                            <p class="mt-2">Farm</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-campground fa-lg"></i>
+                        <a href="/listings/category/Camping" style="text-decoration: none;">
+                            <p class="mt-2">Camping</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-mountain-sun fa-lg"></i>
+                        <a href="/listings/category/Mountain" style="text-decoration: none;">
+                            <p class="mt-2">Mountain</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-house-chimney fa-lg"></i>
+                        <a href="/listings/category/Home" style="text-decoration: none;">
+                            <p class="mt-2">Home</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-solid fa-person-swimming fa-lg"></i>
+                        <a href="/listings/category/Swimming pool" style="text-decoration: none;">
+                            <p class="mt-2">Swimming pool</p>
+                        </a>
+                    </div>
+                    <div class="category me-5">
+                        <i class="fa-regular fa-futbol fa-lg"></i>
+                        <a href="/listings/category/Play" style="text-decoration: none;">
+                            <p class="mt-2">Play</p>
+                        </a>
+                    </div>
+                </div>
+                <button class="arrow-btn right-btn me-3"><i class="fa-solid fa-angle-right"></i></button>
+            </div>
+            <div class="side-div">
+                <div class="filter-div" onclick="filterClick()">
+                    <p> <i class="fa-solid fa-sliders"></i> Filters</p>
+                </div>
+
+                <div class="tax-div form-check form-switch form-check-reverse ps-2 ">
+                    <!-- <p>Price with Tax</p> -->
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Price with Tax</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-div">
+            <% for (let listing of listings) {%>
+                <div class="card index-card mt-3 mb-3 show-content" style="width: 25rem; ">
+                    <a href="/listings/<%= listing._id %>" style="text-decoration: none;">
+                        <figure class="rounded"><img src="<%= listing.image[0].url %>" class="card-img-top rounded"
+                                alt="Listing image">
+                        </figure>
+
+                        <div class="index-card-body ps-3 pe-3">
+                            <h5 class="card-title">
+                                <b>
+                                    <%= listing.title %>
+                                </b>
+                                <!-- <i class="fa-solid fa-heart af-star" style="color: #ff0000;"></i> -->
+                                <i class="fa-regular fa-heart be-star"></i>
+
+                            </h5>
+                            <p class="card-text mb-1">
+                                <%= listing.location %>, <%= listing.country %>
+                            </p>
+                            <p class="card-text original-price">
+                                <b>&#8377; <%= listing.price.toLocaleString("en-IN") %> </b> Night
+                            </p>
+                            <p class="card-text tax-price">
+                                <b><i>&#8377; <%= (listing.price +(listing.price * 0.18)).toLocaleString("en-IN") %>
+                                    </i></b>
+                                Night ( GST included )
+                            </p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="card index-card mt-3 mb-3 load-content" style="width: 25rem; " aria-hidden="true">
+                    <img src="..." class="card-img-top placeholder rounded" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title placeholder-glow">
+                            <span class="placeholder col-6"></span>
+                        </h5>
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-3"></span>
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-3"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <% } %>
+        </div>
+    </body>

@@ -1,0 +1,503 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="show-div row col-md-8 offset-md-2 mt-3 mb-3" id="head">
+            <div class="head-div ps-4">
+                <h3 class="show-head">
+                    <%= listing.title %>
+                </h3>
+            </div>
+            <div class="img-div">
+                <img src="<%= listing.image[0].url %>" class="img-fluid show-img" alt="">
+            </div>
+            <div class="info-div ps-4">
+                <p class="para1">
+                    <b>Owned by &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;
+                        <i>
+                            @<%= listing.owner.username %>
+                        </i></b>
+
+                </p>
+                <p class="para1">
+                    <b>Description &nbsp;: &nbsp;</b>
+                    <%= listing.description %>
+                </p>
+                <p class="para2">
+                    <b>Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                        &nbsp;</b>
+                    &#8377; <%= listing.price.toLocaleString("en-IN") %>/Night
+                </p>
+                <p class="para3">
+                    <b>Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;</b>
+                    <%= listing.location %> <i class="fa-solid fa-location-dot" style="color: #000000;"></i>
+                </p>
+                <p class="para4">
+                    <b>Country &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp; </b>
+                    <%= listing.country %>
+                </p>
+            </div>
+            <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+                <div class="btn-div mt-3 ps-4 mb-3">
+                    <a href="/listings/<%= listing._id %>/edit" id="editId"
+                        class="btn btn-outline-info edit-btn pe-4 ps-4">Edit <i
+                            class="fa-solid fa-pencil fa-sm"></i></a>
+                    <!-- <form> -->
+                    <button class="btn btn-outline-danger edit-btn ps-4 pe-4" id="deleteId" style="margin-left: 2rem;"
+                        onclick="showPop()">Delete <i class="fa-regular fa-trash-can fa-sm"></i></button>
+                    <!-- </form> -->
+                </div>
+
+                <div class="delete-pop col-sm-4 offset-md-4 hidden mb-3">
+                    <p class="info-div" style="font-size: 20px;">You want to delete this listing?</p>
+                    <div class="pop-btn">
+                        <a class="btn btn-outline-info edit-btn" onclick="hidePop()"><i
+                                class="fa-solid fa-xmark"></i></a>
+                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger edit-btn" style="margin-left: 2rem;"><i
+                                    class="fa-solid fa-check"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <% } %>
+
+                    <!-- ---------------add images------------------ -->
+                    <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+                        <hr>
+                        <h3 class="show-head mb-3">Add More Images <i class="fa-regular fa-image"></i></h3>
+
+                        <form action="/listings/<%= listing.id %>/addImage" method="post" class="col-md-12 mb-3"
+                            enctype="multipart/form-data">
+                            <div class="add-photos-box">
+                                <input type="file" id="files" name="listing[image]" multiple
+                                    onchange="updateLabel(this)" required accept="image/*" />
+                                <label for="files" id="file-label"><i class="fa-solid fa-camera-retro fa-xl"></i>&nbsp;
+                                    Upload
+                                    Photos</label>
+                            </div><br><br>
+                            <button class="btn btn-outline-info edit-btn" id="addId">Add</button>
+                        </form>
+                        <% } %>
+
+                            <% if(listing.image.length>1) {%>
+                                <div class="more-img-container col-md-12">
+                                    <hr>
+                                    <h3 class="show-head mb-3">More Photos <i class="fa-regular fa-images"></i></h3>
+                                    <div class="more-img-div">
+                                        <% for(let i=1; i< listing.image.length; i++){ %>
+                                            <img src="<%= listing.image[i].url %>" alt="" class="more-img mb-3 me-1">
+
+                                            <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+                                                <form
+                                                    action="/listings/<%= listing.id %>/addImage/<%= listing.image[i].id %>?_method=DELETE"
+                                                    method="post">
+                                                    <button class="img-delete"><i
+                                                            class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                                <% } %>
+                                                    <% } %>
+                                    </div>
+                                </div>
+                                <% } %>
+
+                                    <!-- review form  -->
+                                    <% if(currUser) {%>
+                                        <form action="/listings/<%= listing.id %>/reviews" method="POST"
+                                            class="form needs-validation" novalidate>
+                                            <hr>
+                                            <div class="col-md-10 mt-3">
+
+                                                <h3 class="show-head">Give Review &nbsp;<i
+                                                        class="fa-regular fa-pen-to-square fa-sm"></i>
+                                                </h3>
+
+                                                <label for="no-rate" class="form-label mt-3 text">Rating</label>
+
+                                                <fieldset class="starability-coinFlip">
+                                                    <input type="radio" id="no-rate" class="input-no-rate"
+                                                        name="review[rating]" value="1" checked
+                                                        aria-label="No rating." />
+                                                    <input type="radio" id="first-rate1" name="review[rating]"
+                                                        value="1" />
+                                                    <label for="first-rate1" title="Terrible">1 star</label>
+                                                    <input type="radio" id="first-rate2" name="review[rating]"
+                                                        value="2" />
+                                                    <label for="first-rate2" title="Not good">2 stars</label>
+                                                    <input type="radio" id="first-rate3" name="review[rating]"
+                                                        value="3" />
+                                                    <label for="first-rate3" title="Average">3 stars</label>
+                                                    <input type="radio" id="first-rate4" name="review[rating]"
+                                                        value="4" />
+                                                    <label for="first-rate4" title="Very good">4 stars</label>
+                                                    <input type="radio" id="first-rate5" name="review[rating]"
+                                                        value="5" />
+                                                    <label for="first-rate5" title="Amazing">5 stars</label>
+                                                </fieldset>
+
+                                                <div class="form-floating mb-3">
+                                                    <textarea class="form-control text" id="afterPop"
+                                                        style="height: 150px;" placeholder="Leave a comment here"
+                                                        id="floatingTextarea" name="review[comment]"
+                                                        required></textarea>
+                                                    <label for="afterPop" style="font-size: 20px;">Comments</label>
+                                                    <div class="invalid-feedback">
+                                                        Please write some comment.
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-outline-info edit-btn"
+                                                    id="submitId">Submit</button>
+
+                                            </div>
+
+                                        </form>
+                                        <% } %>
+
+                                            <!-- show reviews -->
+                                            <% if(listing.reviews && listing.reviews.length){ %>
+                                                <div class="mt-3">
+                                                    <hr>
+                                                    <h3 class="show-head mb-3">All Reviews</h3>
+                                                    <% for(let review of listing.reviews){ %>
+                                                        <div class="card mb-3 col-md-6 review-card">
+                                                            <div class="card-body">
+                                                                <div class="btn-group dropstart option-div">
+                                                                    <div>
+                                                                        <div>
+                                                                            <h5 class="card-title">
+                                                                                <img src="<%= review.author.dp.url %>"
+                                                                                    alt="-"
+                                                                                    style="height: 2.5rem; width: 2.5rem;"
+                                                                                    class="rounded-circle">
+                                                                                <i>&nbsp;&nbsp;
+                                                                                    <b> @<%= review.author.username %>
+                                                                                    </b>
+                                                                                </i>
+                                                                            </h5>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <% for(let i=0; i< 5;i++){ %>
+                                                                                <% if(i < review.rating) {%>
+                                                                                    <i class="fa-solid fa-star"
+                                                                                        style="color: #FFD43B;"></i>
+                                                                                    <% } else{ %>
+                                                                                        <i
+                                                                                            class="fa-regular fa-star"></i>
+                                                                                        <% } %>
+                                                                                            <% } %>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- review options -->
+                                                                    <div>
+                                                                        <button type="button" class="btn btn-sec"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                            <i
+                                                                                class="fa-solid fa-ellipsis-vertical"></i>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu p-0">
+                                                                            <% if(currUser &&
+                                                                                currUser._id.equals(review.author._id)){
+                                                                                %>
+                                                                                <li
+                                                                                    class="ps-3 pb-1 pt-1 review-edit rounded-top">
+                                                                                    <a class=" review-btn"
+                                                                                        href="/listings/<%= listing.id %>/reviews/<%= review.id %>/edit">Edit</a>
+                                                                                </li>
+                                                                                <li class="ps-1 review-delete">
+                                                                                    <form
+                                                                                        action="/listings/<%= listing.id %>/reviews/<%= review.id %>?_method=DELETE"
+                                                                                        method="POST">
+                                                                                        <button
+                                                                                            class="btn btn-sec review-btn">Delete</button>
+                                                                                    </form>
+                                                                                </li>
+                                                                                <% } %>
+                                                                                    <li
+                                                                                        class="ps-3 pb-1 pt-1  review-delete rounded-bottom">
+                                                                                        <a href="#"
+                                                                                            style="text-decoration: none; color: rgb(69, 67, 67);">Report
+                                                                                        </a>
+                                                                                    </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="card-text ">
+                                                                    <%= review.comment %>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                </div>
+
+                                                <% } %>
+
+
+                                                    <div class="col-md-11 mb-3">
+                                                        <hr>
+                                                        <h3 class="show-head mb-3">Where you'll be <i
+                                                                class="fa-solid fa-location-crosshairs fa-xs"
+                                                                style="color: #ff0000;"></i></h3>
+
+                                                        <div class="directionsContainer">
+                                                            <div id="directionsPanel"></div>
+                                                            <div id="directionsItinerary"></div>
+                                                        </div>
+                                                        <div id="myMap" class="rounded"></div>
+
+                                                    </div>
+
+
+                                                    <div class="col-md-11 mb-3">
+                                                        <hr>
+                                                        <h3 class="show-head mb-3">Location's current weather <i
+                                                                class="fa-solid fa-temperature-half"></i></h3>
+                                                        <div class="weather-container">
+                                                            <div class="weather-top">
+                                                                <span class="p-2 ps-3">
+                                                                    <%= result.city %>
+                                                                </span>
+                                                                <span class="p-2 pe-3">
+                                                                    <%= istTime %>
+                                                                </span>
+                                                            </div>
+                                                            <div class="main-info p-3 pb-0">
+                                                                <p class="mb-0">
+                                                                    <%= result.temp %> &deg;C
+                                                                </p>
+                                                                <p class="mt-0 weather-main">
+                                                                    <%= result.weatherMain %>
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="other-weather-div">
+                                                                <div class="other-weather ms-3 p-3">
+                                                                    <p class="mb-0">
+                                                                        <i class="fa-solid fa-wind"></i>
+                                                                        <%= result.wind_speed %> km/h
+                                                                    </p>
+                                                                    <p>
+                                                                        <i class="fa-solid fa-droplet"></i>
+                                                                        <%= result.humidity %> %
+                                                                    </p>
+
+                                                                </div>
+                                                                <% if(result.weatherMain==="Clouds" ) {%>
+                                                                    <% if(hours> 18 || hours < 6 ) {%>
+                                                                            <i class="fa-solid fa-cloud-moon fa-2xl p-3 weather-icon"
+                                                                                style="font-size: 7rem;"></i>
+
+                                                                            <% } else{%>
+                                                                                <i class="fa-solid fa-cloud-sun fa-2xl p-3 weather-icon"
+                                                                                    style="font-size: 7rem;"></i>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                                                        <% if(result.weatherMain==="Clear"
+                                                                                            ) {%>
+                                                                                            <% if(hours> 18 || hours
+                                                                                                < 6 ) {%>
+                                                                                                    <i class="fa-solid fa-moon fa-2xl p-3 weather-icon"
+                                                                                                        style="font-size: 7rem; color: rgb(246, 224, 196); text-shadow: 0 0 5px black;"></i>
+
+                                                                                                    <% } else{%>
+                                                                                                        <i class="fa-solid fa-sun fa-2xl p-3 weather-icon"
+                                                                                                            style="font-size: 7rem; color: rgb(255, 200, 0); text-shadow: 0 0 5px black;"></i>
+                                                                                                        <% } %>
+                                                                                                            <% } %>
+
+                                                                                                                <% if(result.weatherMain==="Rain"
+                                                                                                                    )
+                                                                                                                    {%>
+                                                                                                                    <i class="fa-solid fa-cloud-rain fa-2xl weather-icon p-3"
+                                                                                                                        style="font-size: 7rem; "></i>
+                                                                                                                    <% }
+                                                                                                                        %>
+                                                            </div>
+                                                            <p class="mt-3 mb-3 p-3" style="text-align: center;">The
+                                                                weather can
+                                                                be
+                                                                describe as <%= result.weather %> and feels like <%=
+                                                                        result.feelslike %>
+                                                                        &deg;C </p>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <% if(!currUser || currUser.username !==listing.owner.username) {%>
+                                                        <div class="contact-container col-md-11">
+                                                            <hr>
+                                                            <h3 class="show-head mb-3">Meet the Host <i
+                                                                    class="fa-regular fa-handshake"></i>
+                                                            </h3>
+                                                            <div class="contact-div">
+                                                                <div class="owner-profile">
+                                                                    <img src="<%= listing.owner.dp.url %>" alt="DP"
+                                                                        class="profile-pic p-3">
+                                                                    <h4 class="profile-name mb-0 pb-0">
+                                                                        <%= listing.owner.username %>
+                                                                    </h4>
+                                                                    <p>Host</p>
+                                                                </div>
+                                                                <div class="contact-para">
+                                                                    <p class="p-3">If you have any douts or have
+                                                                        more
+                                                                        questions
+                                                                        or query
+                                                                    </p>
+                                                                    <form method="GET"
+                                                                        action="/listings/<%= listing._id %>/contact">
+                                                                        <button
+                                                                            class="btn btn-outline-info edit-btn ms-3 p-2 ps-3 pe-3">Message
+                                                                            Host <i
+                                                                                class="fa-regular fa-comment"></i></button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <% } %>
+        </div>
+    </body>
+
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap'></script>
+
+    <script type='text/javascript'>
+
+
+        const myStyle = {
+            "elements": {
+                aerial: true,
+                "settings": { "landColor": "#D3EDDB" },
+                "water": { "fillColor": "#B3E6F4" },
+                "waterPoint": { "iconColor": "#5B9FAF" },
+                "transportation": { "strokeColor": "#ffffff" },
+                "road": { "fillColor": "#ffffff" },
+                "railway": { "strokeColor": "#85A8D5" },
+                "structure": { "fillColor": "#F8F4F1" },
+                "runway": { "fillColor": "#ff7fed" },
+                "area": { "fillColor": "#F0F2F4" },
+                "political": { "borderStrokeColor": "#000000", "borderOutlineColor": "transparent" },
+                "point": { "iconColor": "#ffffff", "fillColor": "#000000", "strokeColor": "#ff0000" },
+                "transit": { "fillColor": "transparent" }
+            },
+            "version": "1.0"
+        };
+
+
+        async function GetMap() {
+            await Microsoft.Maps.loadModule('Microsoft.Maps.Search', () => {
+                const searchManager = new Microsoft.Maps.Search.SearchManager(map);
+
+                searchManager.geocode({
+                    where: "<%= listing.location %>",
+                    callback: (result) => {
+                        if (result && result.results && result.results.length > 0) {
+                            const location = result.results[0].location;
+                            map.setView({ center: location, zoom: 14 });
+
+                            // Custom icon URL for the pushpin
+                            const customIconUrl = 'https://cdn-icons-png.flaticon.com/512/5193/5193714.png';
+
+                            // Create a pushpin with a custom icon
+                            const pushpin = new Microsoft.Maps.Pushpin(location, {
+                                icon: customIconUrl,
+                                iconSize: new Microsoft.Maps.Size(60, 60),
+                            });
+
+                            // Create an Infobox for the popup
+                            const infobox = new Microsoft.Maps.Infobox(location, {
+                                title: "<%= listing.title %>",
+                                description: 'Exact location will be provided after booking',
+                                visible: false,
+                                offset: new Microsoft.Maps.Point(0, 30)
+                            });
+
+                            Microsoft.Maps.Events.addHandler(pushpin, 'click', () => {
+                                infobox.setOptions({ visible: true });
+                            });
+
+                            map.entities.push(infobox);
+                            map.entities.push(pushpin);
+                        } else {
+                            alert('Location not found');
+                        }
+                    }
+                });
+            });
+
+            var navigationBarMode = Microsoft.Maps.NavigationBarMode;
+            map = new Microsoft.Maps.Map('#myMap', {
+                credentials: "<%= process.env.MAP_TOKEN %>",
+                center: new Microsoft.Maps.Location(28.6139, 77.2090), // Center the map at a specific location
+                zoom: 14, // Set the initial zoom level
+                customMapStyle: myStyle,
+                // showMapTypeSelector: false,
+                navigationBarMode: navigationBarMode.square,
+                supportedMapTypes: [Microsoft.Maps.MapTypeId.road, Microsoft.Maps.MapTypeId.aerial]
+            });
+
+            Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+                //Create an instance of the directions manager.
+                directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+
+                //Specify where to display the route instructions.
+                directionsManager.setRenderOptions({ itineraryContainer: '#directionsItinerary' });
+
+                //Specify the where to display the input panel
+                directionsManager.showInputPanel('directionsPanel');
+            });
+
+        }
+
+        // ----------------------------------------------------------------------------
+        // Delete Warning Popup
+
+        function del_popup() {
+            try {
+                // Event listener for delete button
+                document.querySelector(".del").addEventListener("click", () => {
+                    // Disable elements
+                    const disabledElements = document.querySelectorAll(".disabled-element");
+                    for (const element of disabledElements) {
+                        element.setAttribute("disabled", "true"); // Disable buttons
+                        element.classList.add("disabled"); // Add a disabled class for styling
+                    }
+
+                    // Add opacity class to elements
+                    const del_el = document.querySelectorAll(".del-opacity");
+                    del_el.forEach((element) => {
+                        element.classList.add("opacity_el");
+                    });
+
+                    // Show the delete confirmation popup
+                    document.querySelector(".del_div").style.visibility = "visible";
+                });
+
+                // Event listener for cancel button in the popup
+                document.querySelector(".cancel").addEventListener("click", () => {
+                    // Enable elements
+                    const disabledElements = document.querySelectorAll(".disabled-element");
+                    for (const element of disabledElements) {
+                        element.removeAttribute("disabled"); // Enable buttons
+                        element.classList.remove("disabled"); // Remove the disabled class
+                    };
+
+                    // Remove opacity class from elements
+                    const del_el = document.querySelectorAll(".del-opacity");
+                    del_el.forEach((element) => {
+                        element.classList.remove("opacity_el");
+                    });
+
+                    // Hide the delete confirmation popup
+                    document.querySelector(".del_div").style.visibility = "hidden";
+                });
+            } catch (err) {
+                // Handle errors
+            }
+        }
+
+        // Call the delete_popup function
+        del_popup();
+        // ----------------------------------------------------------------------------
+
+    </script>

@@ -1,0 +1,45 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="row col-md-6 offset-md-3">
+            <h3 class="show-head mt-3" id="head">Profile Details:</h3>
+            <hr>
+            <form class="form needs-validation" method="post" enctype="multipart/form-data"
+                action="/profile/<%= user._id %>?_method=PUT" novalidate>
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" id="title" type="text" placeholder="enter title" name="user[username]"
+                        value="<%= user.username %>" required>
+                    <label for="title">Username</label>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter username.
+                    </div>
+                    <p class="mt-0 ms-2" style="color: red; font-size: 12px;">If you update your username you need to
+                        login
+                        again with updated username!</p>
+                </div>
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" id="title" type="email" placeholder="enter title" name="user[email]"
+                        value="<%= user.email %>" required>
+                    <label for="title">Email</label>
+                    <div class="invalid-feedback">
+                        Please enter valid email.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h5>Current Profile Pic</h5>
+                    <img src="<%= originalDpUrl %>" class="rounded-circle" style="width: 150px; height: 150px;"
+                        alt="Image preview">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="image">Upload Profile Picture</label>
+                    <input type="file" class="form-control" id="image" placeholder="enter image url" name="user[dp]">
+                </div>
+                <a href="/profile" class="btn btn-outline-secondary edit-btn mt-3 me-3"><i
+                        class="fa-solid fa-arrow-left"></i></a>
+                <button type="submit" class="btn btn-outline-info edit-btn mt-3">Edit</button>
+            </form>
+        </div>
+    </body>

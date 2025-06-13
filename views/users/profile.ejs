@@ -1,0 +1,51 @@
+<% layout("layouts/boilerplate") %>
+
+    <body>
+        <div class="profile-container col-md-8 offset-md-2 mt-3">
+            <h3 class="show-head">Your Profile</h3>
+            <hr>
+            <div class="profile-div">
+                <div class="profile-info col-10">
+                    <img src="<%= currUser.dp.url %>" alt="Dp" class="profile-dp mt-4">
+                    <p class="mt-3 mb-0"><b>Username</b> : <%= currUser.username %>
+                    </p>
+
+                    <% const obscureEmail=(email)=> {%>
+                        <% const [name, domain]=email.split('@');%>
+                            <% return `${name[0]}${new Array(name.length).join('*')}@${domain}`;%>
+                                <% };%>
+
+                                    <% const email=obscureEmail(currUser.email); %>
+
+                                        <p><b>Email</b> : <%= email %>
+                                        </p>
+                                        <!-- <p><b>Email</b> : <%= currUser._id %>
+                                        </p> -->
+                </div>
+                <div class="profile-btn mt-5">
+                    <!-- <a href="/listings" class="btn btn-outline-secondary edit-btn "><i
+                            class="fa-solid fa-arrow-left"></i></a> -->
+
+                    <form action="/profile/<%= currUser._id %>/edit" method="GET">
+                        <button class="btn btn-outline-info edit-btn pe-3 ps-3" id="editId">Edit Profile <i
+                                class="fa-solid fa-pencil fa-sm"></i></button>
+                    </form>
+                    <!-- <form action="/profile/delete"> -->
+                    <button onclick="showBox()" class="btn btn-outline-danger edit-btn pe-3 ps-3" id="deleteId">Delete
+                        Profile <i class="fa-regular fa-trash-can fa-sm"></i></button>
+                    <!-- </form> -->
+                </div>
+                <div class="delete-pop col-sm-4 offset-md-4 hidden mb-3">
+                    <p class="info-div" style="font-size: 20px;">You want to delete your profile?</p>
+                    <div class="pop-btn">
+                        <a class="btn btn-outline-info edit-btn" onclick="hideBox()"><i
+                                class="fa-solid fa-xmark"></i></a>
+                        <form action="/profile/<%= currUser._id %>/delete?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger edit-btn" style="margin-left: 2rem;"><i
+                                    class="fa-solid fa-check"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>

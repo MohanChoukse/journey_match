@@ -1,0 +1,81 @@
+<% layout("/layouts/boilerplate") %>
+
+    <body>
+        <div class="row col-md-6 offset-md-3">
+            <h3 class="show-head mt-3" id="head">Listing Details:</h3>
+            <hr>
+            <form class="form needs-validation" method="post" enctype="multipart/form-data"
+                action="/listings/<%= listing._id %>?_method=PUT" novalidate>
+                <div class="form-floating mb-3 mt-3">
+                    <input class="form-control" id="title" type="text" placeholder="enter title" name="listing[title]"
+                        value="<%= listing.title %>" required>
+                    <label for="title">Title</label>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a Title.
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea name="listing[description]" id="description" class="form-control" style="height: 100px"
+                        placeholder="description" required><%= listing.description %></textarea>
+                    <label for="description">Description</label>
+                    <div class="invalid-feedback">
+                        Please provide a Description.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <h5>Current Image</h5>
+                    <img src="<%= originalImgUrl %>" class="rounded" style="width: 300px;" alt="Image preview">
+                </div>
+                <div class="mb-3">
+                    <label for="image">Upload New Image</label>
+                    <input type="file" class="form-control" id="image" placeholder="enter image url"
+                        name="listing[image]" accept="image/*">
+                </div>
+
+                <select class="form-select mb-3 form-select-lg" name="listing[category]" required>
+                    <option selected>Select Category</option>
+                    <option value="Room">Room</option>
+                    <option value="House">House</option>
+                    <option value="Beach">Beach</option>
+                    <option value="Mountain">Mountain</option>
+                    <option value="Swimming pool">Swimming pool</option>
+                    <option value="Play">Play</option>
+                    <option value="Camping">Camping</option>
+                    <option value="Farm">Farm</option>
+                    <option value="Building">Building</option>
+                    <option value="Home">Home</option>
+                </select>
+                <!-- <p class="mt-0" style="color: red; font-size: 12px;">Plaese select category</p> -->
+
+
+                <div class="form-floating mb-3 ">
+                    <input type="number" class="form-control" id="price" placeholder="enter price" name="listing[price]"
+                        value="<%= listing.price %>" required>
+                    <label for="price">Price</label>
+
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="location" placeholder="enter location"
+                        name="listing[location]" value="<%= listing.location %>" required>
+                    <label for="location">Location</label>
+                    <div class="invalid-feedback">
+                        Please provide a Location.
+                    </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="country" placeholder="enter country"
+                        name="listing[country]" value="<%= listing.country %>" required>
+                    <label for="country">Country</label>
+                    <div class="invalid-feedback">
+                        Please provide a Country.
+                    </div>
+                </div>
+                <a href="/listings/<%= listing.id %>" class="btn btn-outline-secondary edit-btn mt-3 me-3"><i
+                        class="fa-solid fa-arrow-left"></i></a>
+                <button type="submit" class="btn btn-outline-info edit-btn mt-3">Edit</button>
+            </form>
+        </div>
+    </body>

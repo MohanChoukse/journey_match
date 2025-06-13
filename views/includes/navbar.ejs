@@ -1,0 +1,92 @@
+<body>
+  <nav class="navbar sticky-top navbar-expand">
+    <div class="container-fluid navbar-div">
+      <a class="navbar-brand hide-title" style="font-family: Aladin" href="/"
+        >Journey Match</a
+      >
+      <a
+        class="hide-explore navbar-brand"
+        style="font-family: Aladin"
+        href="/listings"
+        >Journey Match</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <form
+        action="/listings/search"
+        method="get"
+        class="search-container"
+        id="searchFormNav"
+      >
+        <input
+          type="text"
+          class="search-field p-2 ps-4 search-input"
+          id="searchQuery"
+          name="searchQuery"
+          placeholder="Search by title, location, or country"
+        />
+        <button type="submit" class="search-btn p-2 ms-1 search-button">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <div class="navbar-options hide-options">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/listings"
+              >Explore</a
+            >
+            <a class="nav-link" href="/listings/new">Add New Listing</a>
+            <!-- <a class="nav-link" href="/listings/new">About Us</a> -->
+
+            <% if(!currUser) { %>
+            <a class="nav-link" href="/login">Login/SignUp</a>
+            <!-- <a class="nav-link" href="/signup">SignUp</a> -->
+            <% } %> <% if(currUser){ %>
+            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="/logout">LogOut</a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <div class="dropstart navbar-btn">
+        <button
+          class="btn"
+          style="border: none"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars fa-2xl"></i>
+        </button>
+        <div class="navbar-options-container">
+          <ul class="dropdown-menu mt-5 nav-drop">
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="/listings">Explore</a></li>
+            <li>
+              <a class="dropdown-item" href="/listings/new">Add New Listing</a>
+            </li>
+            <!-- <li><a class="dropdown-item" href="#">About us</a></li> -->
+
+            <% if(!currUser) { %>
+            <li><a class="dropdown-item" href="/login">Login/SignUp</a></li>
+            <!-- <li><a class="dropdown-item" href="signup">SignUp</a></li> -->
+            <% } %> <% if(currUser){ %>
+            <li><a class="dropdown-item" href="logout">LogOut</a></li>
+            <% } %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</body>
