@@ -15,7 +15,7 @@ main()
 
 async function main() {
   await mongoose.connect(
-    "mongodb+srv://kartikMain24:Kartikmain24@cluster0.vxdsbvl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    ""
   );
 }
 
